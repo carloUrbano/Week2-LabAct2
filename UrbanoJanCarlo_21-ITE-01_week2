@@ -1,0 +1,82 @@
+<?php
+
+class Book {
+    public $title;
+    public $author;
+    public $price;
+
+    public function __construct($title, $author, $price) {
+        $this->title = $title;
+        $this->author = $author;
+        $this->price = $price;
+    }
+
+    public function getDetails() {
+        return "Title: " . $this->title . ", Author: " . $this->author . ", Price: $" . $this->price;
+    }
+}
+
+class Library {
+    public $name;
+    private $books = [];
+
+    public function __construct($name) {
+        $this->name = $name;
+    }
+
+    public function addBook($book) {
+        $this->books[] = $book;
+    }
+
+    public function removeBook($title) {
+        foreach ($this->books as $key => $book) {
+            if ($book->title === $title) {
+                unset($this->books[$key]);
+                echo "Book '$title' removed from the library.\n";
+                return;
+            }
+        }
+        echo "Book '$title' not found in the library.\n";
+    }
+
+    public function updateStock($title, $stock) {
+        echo "Stock updated for '$title' with arguments: $stock\n";
+    }
+
+    public function listBooks() {
+        echo "Books in the library:\n";
+        foreach ($this->books as $book) {
+            echo $book->getDetails() . "\n";
+        }
+    }
+
+    public function closeLibrary() {
+        echo "The library '{$this->name}' is now closed.\n";
+    }
+}
+
+$library = new Library('City Library');
+
+$book1 = new Book('Harry Potter and the Sorcerer’s Stone', 'J.K. Rowling', 16.41);
+$book2 = new Book('The Life of Captain Marvel', 'Margaret Stohl', 15.99);
+$book3 = new Book('To Kill a Mockingbird', 'Harper Lee', 15.50);
+$book4 = new Book('Pride and Prejudice', 'Jane Austen', 15.80);
+$book5 = new Book('The Da Vinci Code', 'Dan Brown', 16.70);
+$book6 = new Book('The Alchemist', 'Paulo Coelho', 15.90);
+
+$library->addBook($book1);
+$library->addBook($book2);
+$library->addBook($book3);
+$library->addBook($book4);
+$library->addBook($book5);
+$library->addBook($book6);
+
+$library->updateStock('Harry Potter and the Sorcerer’s Stone', 50);
+$library->listBooks();
+
+$library->removeBook('1984');
+$library->listBooks();
+
+$library->closeLibrary();
+
+?> 
